@@ -5,7 +5,6 @@ on: [push]
 jobs:
   deploy:
     environment: production-secrets # the locked down environment we pull secrets from
-    if: ${{ github.event.issue.pull_request }} # only run on pull request comments
     runs-on: ubuntu-latest
 
     steps:

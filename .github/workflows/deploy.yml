@@ -10,20 +10,25 @@ permissions:
 
 jobs:
   deploy:
-    environment: production-secrets # the locked down environment we pull secrets from
     runs-on: ubuntu-latest
 
     steps:
-      # The branch-deploy Action
-      - uses: github/branch-deploy@v8.1.1
-        id: branch-deploy
-
-        # Deploy our branch via SSH remote commands
-      - name: SSH Remote Deploy
-        uses: appleboy/ssh-action@4a03da89e5c43da56e502053be4bbcb293411883 # pin@v0.1.6
+      - uses: actions/checkout@v3
+      - name: Deploy to Server
+        uses: easingthemes/ssh-deploy@main
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.SSH_PORT }}
-          script: touch haha.txt
+            SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
+            ARGS: "-rlgoDzvc -i --delete"
+            REMOTE_HOST: ${{ secrets.SSH_HOST }}
+            REMOTE_USER: ${{ secrets.SSH_USERNAME }}
+            TARGET: ${{ secrets.REMOTE_TARGET }}
+            EXCLUDE: "/dist/, /node_modules/"
+            SCRIPT_BEFORE: |
+              whoami
+              ls -al
+            SCRIPT_AFTER: |
+              whoami
+              ls -al
+              echo $RSYNC_STDOUT
+              touch haha.txt
+

@@ -9,7 +9,7 @@ jobs:
 
     steps:
       # The branch-deploy Action
-      - uses: github/branch-deploy@v8.0.0
+      - uses: github/branch-deploy@v8.1.1
         id: branch-deploy
 
         # Deploy our branch via SSH remote commands

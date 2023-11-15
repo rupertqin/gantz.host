@@ -2,6 +2,12 @@ name: branch-deploy
 
 on: [push]
 
+permissions:
+  pull-requests: write
+  deployments: write
+  contents: write
+  checks: read
+
 jobs:
   deploy:
     environment: production-secrets # the locked down environment we pull secrets from

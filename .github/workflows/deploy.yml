@@ -13,13 +13,6 @@ jobs:
       - uses: github/branch-deploy@v8.0.0
         id: branch-deploy
 
-        # If the branch-deploy Action was triggered, checkout our branch
-      - name: Checkout
-        if: ${{ steps.branch-deploy.outputs.continue == 'true' }}
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ steps.branch-deploy.outputs.ref }}
-
         # Deploy our branch via SSH remote commands
       - name: SSH Remote Deploy
         if: ${{ steps.branch-deploy.outputs.continue == 'true' && steps.branch-deploy.outputs.noop != 'true'}}

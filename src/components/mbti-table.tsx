@@ -1,112 +1,106 @@
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
-const mbtiTypes = [
-  {
-    type: "INTJ",
-    category: "分析型 (NT)",
-    functions: ["Ni", "Te", "Fi", "Se", "Ne", "Ti", "Fe", "Si"],
-  },
-  {
-    type: "INTP",
-    category: "分析型 (NT)",
-    functions: ["Ti", "Ne", "Si", "Fe", "Te", "Ni", "Se", "Fi"],
-  },
-  {
-    type: "ENTJ",
-    category: "分析型 (NT)",
-    functions: ["Te", "Ni", "Se", "Fi", "Ti", "Ne", "Si", "Fe"],
-  },
-  {
-    type: "ENTP",
-    category: "分析型 (NT)",
-    functions: ["Ne", "Ti", "Fe", "Si", "Ni", "Te", "Fi", "Se"],
-  },
-  {
-    type: "INFJ",
-    category: "外交型 (NF)",
-    functions: ["Ni", "Fe", "Ti", "Se", "Ne", "Fi", "Te", "Si"],
-  },
-  {
-    type: "INFP",
-    category: "外交型 (NF)",
-    functions: ["Fi", "Ne", "Si", "Te", "Fe", "Ni", "Se", "Ti"],
-  },
-  {
-    type: "ENFJ",
-    category: "外交型 (NF)",
-    functions: ["Fe", "Ni", "Se", "Ti", "Fi", "Ne", "Si", "Te"],
-  },
-  {
-    type: "ENFP",
-    category: "外交型 (NF)",
-    functions: ["Ne", "Fi", "Te", "Si", "Ni", "Fe", "Ti", "Se"],
-  },
-  {
-    type: "ISTJ",
-    category: "守卫型 (SJ)",
-    functions: ["Si", "Te", "Fi", "Ne", "Se", "Ti", "Fe", "Ni"],
-  },
-  {
-    type: "ISFJ",
-    category: "守卫型 (SJ)",
-    functions: ["Si", "Fe", "Ti", "Ne", "Se", "Fi", "Te", "Ni"],
-  },
-  {
-    type: "ESTJ",
-    category: "守卫型 (SJ)",
-    functions: ["Te", "Si", "Ne", "Fi", "Ti", "Se", "Ni", "Fe"],
-  },
-  {
-    type: "ESFJ",
-    category: "守卫型 (SJ)",
-    functions: ["Fe", "Si", "Ne", "Ti", "Fi", "Se", "Ni", "Te"],
-  },
-  {
-    type: "ISTP",
-    category: "探索型 (SP)",
-    functions: ["Ti", "Se", "Ni", "Fe", "Te", "Si", "Ne", "Fi"],
-  },
-  {
-    type: "ISFP",
-    category: "探索型 (SP)",
-    functions: ["Fi", "Se", "Ni", "Te", "Fe", "Si", "Ne", "Ti"],
-  },
-  {
-    type: "ESTP",
-    category: "探索型 (SP)",
-    functions: ["Se", "Ti", "Fe", "Ni", "Si", "Te", "Fi", "Ne"],
-  },
-  {
-    type: "ESFP",
-    category: "探索型 (SP)",
-    functions: ["Se", "Fi", "Te", "Ni", "Si", "Fe", "Ti", "Ne"],
-  },
-];
+const IE = ["I", "E"];
+const INPUT = ["N", "S"];
+const OUTPUT = ["T", "F"];
+const JP = ["J", "P"];
 
-const functionPositions = [
-  "主导功能",
-  "辅助功能",
-  "第三功能",
-  "劣势功能",
-  "对立功能",
-  "批判性父母",
-  "欺骗性角色",
-  "恶魔功能",
-];
+function idendity(key): any {
+  return key;
+}
+
+function getOpposite(key: string): string {
+  const opposite = {
+    I: "E",
+    E: "I",
+    N: "S",
+    S: "N",
+    T: "F",
+    F: "T",
+    J: "P",
+    P: "J",
+  };
+  return opposite[key];
+}
+
+function countBoolOddeven(...arg: boolean[]): boolean {
+  let count = 0;
+  for (let i = 0; i < arg.length; i++) {
+    if (arg[i]) {
+      count++;
+    }
+  }
+  return count % 2 === 0;
+}
+
+function getFunctionNameByType([ie, input, output, jp]: string[]): string[] {
+  const halfLen = 4;
+  const functions = [];
+  const IS_I = IE[0] === ie;
+  const IS_J = JP[0] === jp;
+
+  for (let i = 0; i < halfLen; i++) {
+    // 每两次交换一次输入输出
+    if (i % 2 !== 0) {
+      [input, output] = [output, input];
+    }
+
+    // ie jp 影响主功能
+    let mainfn = countBoolOddeven(IS_I, IS_J) ? input : output;
+
+    // 34 使用相反功能
+    mainfn = (i % halfLen < 2 ? idendity : getOpposite)(mainfn);
+
+    const _ie = (i % 2 === 0 ? idendity : getOpposite)(ie).toLowerCase();
+    functions[i] = mainfn + _ie;
+
+    // 根据阳面计算阴面功能
+    if (i < halfLen) {
+      functions[i + halfLen] = mainfn + getOpposite(_ie.toUpperCase()).toLowerCase();
+    }
+  }
+
+  return functions;
+}
+
+function genFuncs() {
+  const atoms = [IE, INPUT, OUTPUT, JP];
+
+  const result = [];
+
+  for (const ie of IE) {
+    for (const input of INPUT) {
+      for (const output of OUTPUT) {
+        for (const jp of JP) {
+          const mbtiType = {
+            type: "",
+            category: "",
+            name: "",
+            functions: [] as string[],
+          };
+          mbtiType.type = [ie, input, output, jp].join("");
+          mbtiType.functions = getFunctionNameByType(mbtiType.type.split(""));
+          mbtiType.category = mbtiType.type.includes("NT") ? "NT" : mbtiType.type.includes("NF") ? "NF" : /S*J/.test(mbtiType.type) ? "SJ" : "SP";
+          mbtiType.name = mbtiType.type.includes("NT") ? "分析型 (NT)" : mbtiType.type.includes("NF") ? "外交型 (NF)" : /S*J/.test(mbtiType.type) ? "守卫型 (SJ)" : "探索型 (SP)";
+          result.push(mbtiType);
+        }
+      }
+    }
+  }
+
+  return result;
+}
+
+const mbtiTypes = genFuncs();
+mbtiTypes.sort((a, b) => a.category.localeCompare(b.category));
+
+const functionPositions = ["主导功能", "辅助功能", "第三功能", "劣势功能", "对立功能", "批判性父母", "欺骗性角色", "恶魔功能"];
 
 const categoryColors = {
-  "分析型 (NT)": "bg-blue-100",
-  "外交型 (NF)": "bg-green-100",
-  "守卫型 (SJ)": "bg-yellow-100",
-  "探索型 (SP)": "bg-red-100",
+  NT: "bg-blue-100",
+  NF: "bg-green-100",
+  SJ: "bg-yellow-100",
+  SP: "bg-red-100",
 };
 
 const ichingHexagrams = {
@@ -129,8 +123,7 @@ export default function MBTIIChingTable() {
     <div className="container mx-auto py-10">
       <h1 className="text-3xl font-bold mb-4">MBTI认知功能与易经64卦对应表</h1>
       <p className="mb-6">
-        此表展示了16种MBTI类型的八个认知功能、它们在意识中的位置，以及与易经64卦的对应关系。
-        功能的顺序从左到右代表了它们在意识中的重要性和使用频率，从最常用的主导功能到最不常用的恶魔功能。
+        此表展示了16种MBTI类型的八个认知功能、它们在意识中的位置，以及与易经64卦的对应关系。 功能的顺序从左到右代表了它们在意识中的重要性和使用频率，从最常用的主导功能到最不常用的恶魔功能。
         每个认知功能都与一个易经卦象相对应，反映了它们在中国传统哲学中的深层含义。
       </p>
       <div className="mb-4 flex flex-wrap gap-2">
@@ -152,7 +145,7 @@ export default function MBTIIChingTable() {
               }}
             >
               <span className="font-bold">{func}:</span>
-              <span>{hexagram.symbol}YYY</span>
+              <span>{hexagram.symbol}</span>
               <span>{hexagram.name}</span>
               <span>({hexagram.meaning})</span>
             </li>
@@ -175,19 +168,13 @@ export default function MBTIIChingTable() {
           </TableHeader>
           <TableBody>
             {mbtiTypes.map((type) => (
-              <TableRow
-                key={type.type}
-                className={categoryColors[type.category]}
-              >
+              <TableRow key={type.type} className={categoryColors[type.category]}>
                 <TableCell className="font-medium">{type.type}</TableCell>
-                <TableCell>{type.category}</TableCell>
+                <TableCell>{type.name}</TableCell>
                 {type.functions.map((func, index) => (
                   <TableCell key={index}>
                     {func}
-                    <span
-                      className="ml-1"
-                      title={`${ichingHexagrams[func].name} (${ichingHexagrams[func].meaning})`}
-                    >
+                    <span className="ml-1" title={`${ichingHexagrams[func].name} (${ichingHexagrams[func].meaning})`}>
                       {ichingHexagrams[func].symbol}
                     </span>
                   </TableCell>

@@ -1,4 +1,15 @@
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { useState } from "react";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import "../styles/global.css";
+import { Bagua } from "@/components/Bagua";
 
 const IE = ["I", "E"];
 const INPUT = ["N", "S"];
@@ -45,18 +56,20 @@ function getFunctionNameByType([ie, input, output, jp]: string[]): string[] {
       [input, output] = [output, input];
     }
 
-    // ie jp 影响主功能
+    // ie jp 共同影响主副功能，且其余功能的位置
     let mainfn = countBoolOddeven(IS_I, IS_J) ? input : output;
 
     // 34 使用相反功能
     mainfn = (i % halfLen < 2 ? idendity : getOpposite)(mainfn);
 
+    // 功能位置的内外倾由主内外倾决定， 1 2 5 6 为内倾， 3 4 7 8 为外倾，也就是说，主副内外倾已然决定
     const _ie = (i % 2 === 0 ? idendity : getOpposite)(ie).toLowerCase();
     functions[i] = mainfn + _ie;
 
     // 根据阳面计算阴面功能
     if (i < halfLen) {
-      functions[i + halfLen] = mainfn + getOpposite(_ie.toUpperCase()).toLowerCase();
+      functions[i + halfLen] =
+        mainfn + getOpposite(_ie.toUpperCase()).toLowerCase();
     }
   }
 
@@ -80,8 +93,19 @@ function genFuncs() {
           };
           mbtiType.type = [ie, input, output, jp].join("");
           mbtiType.functions = getFunctionNameByType(mbtiType.type.split(""));
-          mbtiType.category = mbtiType.type.includes("NT") ? "NT" : mbtiType.type.includes("NF") ? "NF" : /S*J/.test(mbtiType.type) ? "SJ" : "SP";
-          mbtiType.name = mbtiType.type.includes("NT") ? "分析型 (NT)" : mbtiType.type.includes("NF") ? "外交型 (NF)" : /S*J/.test(mbtiType.type) ? "守卫型 (SJ)" : "探索型 (SP)";
+          if (mbtiType.type.includes("NT")) {
+            mbtiType.category = "NT";
+            mbtiType.name = "分析型 (NT)";
+          } else if (mbtiType.type.includes("NF")) {
+            mbtiType.category = "NF";
+            mbtiType.name = "外交型 (NF)";
+          } else if (/S*J/.test(mbtiType.type)) {
+            mbtiType.category = "SJ";
+            mbtiType.name = "守卫型 (SJ)";
+          } else {
+            mbtiType.category = "SP";
+            mbtiType.name = "探索型 (SP)";
+          }
           result.push(mbtiType);
         }
       }
@@ -94,7 +118,16 @@ function genFuncs() {
 const mbtiTypes = genFuncs();
 mbtiTypes.sort((a, b) => a.category.localeCompare(b.category));
 
-const functionPositions = ["主导功能", "辅助功能", "第三功能", "劣势功能", "对立功能", "批判性父母", "欺骗性角色", "恶魔功能"];
+const functionPositions = [
+  "主导功能",
+  "辅助功能",
+  "第三功能",
+  "劣势功能",
+  "对立功能",
+  "批判性父母",
+  "欺骗性角色",
+  "恶魔功能",
+];
 
 const categoryColors = {
   NT: "bg-blue-100",
@@ -119,11 +152,14 @@ function say() {
 }
 
 export default function MBTIIChingTable() {
+  const [selectedType, setSelectedType] = useState(null);
+
   return (
     <div className="container mx-auto py-10">
       <h1 className="text-3xl font-bold mb-4">MBTI认知功能与易经64卦对应表</h1>
       <p className="mb-6">
-        此表展示了16种MBTI类型的八个认知功能、它们在意识中的位置，以及与易经64卦的对应关系。 功能的顺序从左到右代表了它们在意识中的重要性和使用频率，从最常用的主导功能到最不常用的恶魔功能。
+        此表展示了16种MBTI类型的八个认知功能、它们在意识中的位置，以及与易经64卦的对应关系。
+        功能的顺序从左到右代表了它们在意识中的重要性和使用频率，从最常用的主导功能到最不常用的恶魔功能。
         每个认知功能都与一个易经卦象相对应，反映了它们在中国传统哲学中的深层含义。
       </p>
       <div className="mb-4 flex flex-wrap gap-2">
@@ -168,13 +204,20 @@ export default function MBTIIChingTable() {
           </TableHeader>
           <TableBody>
             {mbtiTypes.map((type) => (
-              <TableRow key={type.type} className={categoryColors[type.category]}>
+              <TableRow
+                key={type.type}
+                className={categoryColors[type.category]}
+                onClick={() => setSelectedType(type)}
+              >
                 <TableCell className="font-medium">{type.type}</TableCell>
                 <TableCell>{type.name}</TableCell>
                 {type.functions.map((func, index) => (
                   <TableCell key={index}>
                     {func}
-                    <span className="ml-1" title={`${ichingHexagrams[func].name} (${ichingHexagrams[func].meaning})`}>
+                    <span
+                      className="ml-1"
+                      title={`${ichingHexagrams[func].name} (${ichingHexagrams[func].meaning})`}
+                    >
                       {ichingHexagrams[func].symbol}
                     </span>
                   </TableCell>
@@ -184,6 +227,7 @@ export default function MBTIIChingTable() {
           </TableBody>
         </Table>
       </div>
+      <Bagua type={selectedType} />
     </div>
   );
 }

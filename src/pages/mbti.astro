@@ -1,0 +1,26 @@
+---
+import '../styles/global.css';
+import MyButton from '../components/Button.astro';
+import { Button } from "@/components/ui/button"
+import MBTIIChingTable from "@/components/MbtiTable"
+
+// Full Astro Component Syntax:
+// https://docs.astro.build/basics/astro-components/
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>秦项信息网络</title>
+	</head>
+
+	<body>
+		<MBTIIChingTable client:only />
+		<h2>
+			<a href="https://beian.miit.gov.cn/" target="_blank">桂ICP备2023011846号-1</a>
+		</h2>
+	</body>
+</html>

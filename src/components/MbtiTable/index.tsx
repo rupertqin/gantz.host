@@ -38,7 +38,7 @@ export default function MBTIIChingTable() {
       <Hexagrams selectedFunctions={items} onFunctionSelect={chooseFunction} />
       <div className="overflow-x-auto">
         <Table>
-          <TableCaption>16种MBTI类型的认知功能与易经卦象对应</TableCaption>
+          <TableCaption>16种MBTI类型的认知功能与功能排位</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead className="w-[100px] text-center">类型</TableHead>

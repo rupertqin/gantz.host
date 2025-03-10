@@ -18,8 +18,14 @@ jobs:
     - name: Install dependencies
       run: npm install
 
+    - name: Get Git Hash
+      id: git-hash
+      run: echo "PUBLIC_GIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
     - name: Build
       run: npm run build
+      env:
+        PUBLIC_GIT_HASH: ${{ env.PUBLIC_GIT_HASH }}
 
     - name: Deploy to server
       uses: appleboy/scp-action@v0.1.7

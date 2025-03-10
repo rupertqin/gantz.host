@@ -6,6 +6,7 @@ interface Props {
 import '../styles/global.css';
 
 const { title, description = "秦项科技 - 专注于人工智能与科技创新" } = Astro.props;
+const gitHash = import.meta.env.PUBLIC_GIT_HASH || 'dev';
 ---
 
 <html lang="zh">
@@ -35,6 +36,7 @@ const { title, description = "秦项科技 - 专注于人工智能与科技创�
 							桂ICP备2023011846号-1
 						</a>
 					</p>
+					<p class="mt-1 text-xs text-gray-400">Build: {gitHash}</p>
 				</div>
 			</div>
 		</footer>

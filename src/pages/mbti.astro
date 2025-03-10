@@ -1,23 +1,10 @@
 ---
-import '../styles/global.css';
-import MyButton from '../components/Button.astro';
-import { Button } from "@/components/ui/button"
-import MBTIIChingTable from "@/components/MbtiTable"
-
-// Full Astro Component Syntax:
-// https://docs.astro.build/basics/astro-components/
+import Main from '../layouts/main.astro';
+import MBTIIChingTable from "@/components/MbtiTable";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>秦项信息网络</title>
-	</head>
-
-	<body class="px-3" >
+<Main title="MBTI与易经对应分析 - 秦项科技">
+	<main class="container mx-auto px-4 py-8">
 		<MBTIIChingTable client:only />
-	</body>
-</html>
+	</main>
+</Main>

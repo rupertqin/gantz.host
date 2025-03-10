@@ -8,25 +8,27 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import "../styles/global.css";
+import "@/styles/global.css";
 import { Bagua } from "@/components/Bagua";
 import { useFixedSizeStack } from "@/lib/hooks";
-import {
-  ICHING_HEXAGRAMS,
-  mbtiTypes,
-  functionPositions,
-  categoryColors,
-  MbtiService,
-} from "@/components/constant/mbti";
-import type { MbtiType } from "@/components/constant/mbti";
+import { MbtiService } from "@/lib/mbti";
+import { Hexagrams } from "./Hexagrams";
+import type { MbtiType } from "@/lib/mbti";
 
 export default function MBTIIChingTable() {
-  const [selectedType, setSelectedType] = useState<MbtiType>(mbtiTypes[0]);
-  const { items, push, pop, size } = useFixedSizeStack(2);
+  const [selectedType, setSelectedType] = useState<MbtiType>(
+    MbtiService.getAllTypes()[0]
+  );
+  const { items, push } = useFixedSizeStack<string>(2);
 
   function chooseFunction(func: string) {
     if (!items.includes(func)) push(func);
   }
+
+  const categories = MbtiService.getCategories();
+  const functionPositions = MbtiService.getFunctionPositions();
+  const categoryColors = MbtiService.getCategoryColors();
+  const mbtiTypes = MbtiService.getAllTypes();
 
   return (
     <div className="container mx-auto py-10">
@@ -44,25 +46,9 @@ export default function MBTIIChingTable() {
           </div>
         ))}
       </div>
-      <div className="mb-4">
-        <h2 className="text-xl font-semibold mb-2">
-          认知功能与易经卦象对应：{items.join(" ")}
-        </h2>
-        <ul className="grid grid-cols-2 md:grid-cols-4 gap-2">
-          {Object.entries(ICHING_HEXAGRAMS).map(([func, hexagram]) => (
-            <li
-              key={func}
-              className="flex items-center space-x-2 px-2 py-1 rounded bg-gray-100"
-              onClick={() => chooseFunction(func)}
-            >
-              <span className="font-bold">{func}:</span>
-              <span>{hexagram.symbol}</span>
-              <span>{hexagram.name}</span>
-              <span>({hexagram.meaning})</span>
-            </li>
-          ))}
-        </ul>
-      </div>
+
+      <Hexagrams selectedFunctions={items} onFunctionSelect={chooseFunction} />
+
       <div className="overflow-x-auto">
         <Table>
           <TableCaption>16种MBTI类型的认知功能与易经卦象对应</TableCaption>
@@ -81,30 +67,29 @@ export default function MBTIIChingTable() {
               <TableRow
                 key={type.type}
                 data-state={type.type === selectedType.type ? "selected" : ""}
-                className={
-                  categoryColors[type.category as keyof typeof categoryColors]
-                }
+                className={MbtiService.getColorByCategory(type.category)}
                 onClick={() => setSelectedType(type)}
               >
                 <TableCell className="font-medium text-center">
                   {type.type}
                 </TableCell>
-                {type.functions.map((func, index) => (
-                  <TableCell key={index} className="text-center">
-                    <span
-                      className="ml-1"
-                      title={`${
-                        ICHING_HEXAGRAMS[func as keyof typeof ICHING_HEXAGRAMS]
-                          .name
-                      } (${
-                        ICHING_HEXAGRAMS[func as keyof typeof ICHING_HEXAGRAMS]
-                          .meaning
-                      })`}
-                    >
-                      {func}
-                    </span>
-                  </TableCell>
-                ))}
+                {type.functions.map((func, index) => {
+                  const hexagram = MbtiService.getHexagramByFunction(func);
+                  return (
+                    <TableCell key={index} className="text-center">
+                      <span
+                        className="ml-1"
+                        title={
+                          hexagram
+                            ? `${hexagram.name} (${hexagram.meaning})`
+                            : ""
+                        }
+                      >
+                        {func}
+                      </span>
+                    </TableCell>
+                  );
+                })}
               </TableRow>
             ))}
           </TableBody>

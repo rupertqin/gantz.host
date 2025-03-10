@@ -34,12 +34,6 @@ export default function MBTIIChingTable() {
 
   return (
     <div className="container mx-auto py-10">
-      <h1 className="text-3xl font-bold mb-4">MBTI认知功能与八维对应表</h1>
-      <p className="mb-6 text-sm">
-        此表展示了16种MBTI类型的八个认知功能、它们在意识中的位置，以及与易经八卦的对应关系。
-        功能的顺序从左到右代表了它们在意识中的重要性和使用频率，从最常用的主导功能到最不常用的恶魔功能。
-        每个认知功能都与一个易经卦象相对应，反映了它们在中国传统哲学中的深层含义。
-      </p>
       <Bagua type={selectedType} />
       <Hexagrams selectedFunctions={items} onFunctionSelect={chooseFunction} />
       <div className="overflow-x-auto">

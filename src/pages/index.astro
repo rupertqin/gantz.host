@@ -5,7 +5,13 @@ export const prerender = true;
 ---
 
 <Main title="秦项科技 - 科技创新的引领者">
-	<main class="container mx-auto px-4">
+	<!-- 简化的背景装饰 -->
+	<div class="absolute inset-0 -z-10">
+		<div class="absolute top-0 right-0 w-72 h-72 bg-blue-100/40 rounded-bl-full"></div>
+		<div class="absolute bottom-0 left-0 w-72 h-72 bg-purple-100/40 rounded-tr-full"></div>
+	</div>
+
+	<main class="container mx-auto px-4 relative">
 		<!-- Hero Section -->
 		<section class="py-20 text-center">
 			<div class="mb-8">
@@ -27,24 +33,25 @@ export const prerender = true;
 		<!-- Features Section -->
 		<section class="py-16">
 			<div class="grid md:grid-cols-3 gap-8">
-				<div class="p-6 rounded-lg bg-white dark:bg-gray-800 shadow-lg">
-					<h3 class="text-xl font-semibold mb-4">人工智能</h3>
-					<p class="text-gray-600 dark:text-gray-300">
-						提供先进的AI解决方案，包括机器学习、深度学习和自然语言处理
-					</p>
-				</div>
-				<div class="p-6 rounded-lg bg-white dark:bg-gray-800 shadow-lg">
-					<h3 class="text-xl font-semibold mb-4">MBTI分析</h3>
-					<p class="text-gray-600 dark:text-gray-300">
-						结合易经与现代心理学，提供独特的性格分析工具
-					</p>
-				</div>
-				<div class="p-6 rounded-lg bg-white dark:bg-gray-800 shadow-lg">
-					<h3 class="text-xl font-semibold mb-4">技术咨询</h3>
-					<p class="text-gray-600 dark:text-gray-300">
-						为企业提供专业的技术咨询服务，助力数字化转型
-					</p>
-				</div>
+				{[
+					{
+						title: "人工智能",
+						desc: "提供先进的AI解决方案，包括机器学习、深度学习和自然语言处理"
+					},
+					{
+						title: "MBTI分析",
+						desc: "结合易经与现代心理学，提供独特的性格分析工具"
+					},
+					{
+						title: "技术咨询",
+						desc: "为企业提供专业的技术咨询服务，助力数字化转型"
+					}
+				].map(feature => (
+					<div class="p-6 rounded-lg bg-white dark:bg-gray-800 shadow-md hover:shadow-lg transition-shadow duration-300">
+						<h3 class="text-xl font-semibold mb-4">{feature.title}</h3>
+						<p class="text-gray-600 dark:text-gray-300">{feature.desc}</p>
+					</div>
+				))}
 			</div>
 		</section>
 
@@ -52,7 +59,7 @@ export const prerender = true;
 		<section class="py-16">
 			<h2 class="text-3xl font-bold mb-8 text-center">最新动态</h2>
 			<div class="grid md:grid-cols-2 gap-8">
-				<article class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+				<article class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
 					<div class="p-6">
 						<h3 class="text-xl font-semibold mb-2">新一代AI模型发布</h3>
 						<p class="text-gray-600 dark:text-gray-300">
@@ -61,7 +68,7 @@ export const prerender = true;
 						<a href="#" class="text-blue-600 dark:text-blue-400 mt-4 inline-block">阅读更多 →</a>
 					</div>
 				</article>
-				<article class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+				<article class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
 					<div class="p-6">
 						<h3 class="text-xl font-semibold mb-2">企业数字化转型案例</h3>
 						<p class="text-gray-600 dark:text-gray-300">
@@ -74,3 +81,17 @@ export const prerender = true;
 		</section>
 	</main>
 </Main>
+
+<style>
+	/* 添加渐变动画 */
+	@keyframes gradient-shift {
+		0% { background-position: 0% 50%; }
+		50% { background-position: 100% 50%; }
+		100% { background-position: 0% 50%; }
+	}
+
+	.gradient-animate {
+		background-size: 200% 200%;
+		animation: gradient-shift 15s ease infinite;
+	}
+</style>

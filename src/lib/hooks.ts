@@ -28,6 +28,13 @@ class FixedSizeStack<T> {
   size(): number {
     return this.items.length;
   }
+
+  remove(element: T): void {
+    const index = this.items.indexOf(element);
+    if (index !== -1) {
+      this.items.splice(index, 1);
+    }
+  }
 }
 
 export function useFixedSizeStack<T>(maxSize: number) {
@@ -48,5 +55,13 @@ export function useFixedSizeStack<T>(maxSize: number) {
     return element;
   }, [stack]);
 
-  return { items, push, pop, size: stack.size() };
+  const remove = useCallback(
+    (element: T) => {
+      stack.remove(element);
+      setItems([...stack.items]); // 触发组件更新
+    },
+    [stack]
+  );
+
+  return { items, push, pop, remove, size: stack.size() };
 }

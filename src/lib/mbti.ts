@@ -127,14 +127,15 @@ export class MbtiService {
     return opposite[key];
   }
 
-  private static countBoolOddeven(...arg: boolean[]): boolean {
-    let count = 0;
-    for (let i = 0; i < arg.length; i++) {
-      if (arg[i]) {
-        count++;
-      }
-    }
-    return count % 2 === 0;
+  /**
+   * 判断布尔值中true的个数是否为偶数
+   * @param booleans 任意数量的布尔值
+   * @returns true表示true的个数为偶数，false表示true的个数为奇数
+   */
+  private static countBoolOddeven(...booleans: boolean[]): boolean {
+    return (
+      booleans.reduce((count, value) => count + (value ? 1 : 0), 0) % 2 === 0
+    );
   }
 
   private static getFunctionNameByType([
@@ -231,6 +232,42 @@ export class MbtiService {
     return (
       this.categoryColors[category as keyof typeof this.categoryColors] || ""
     );
+  }
+
+  // 在 MbtiService 类中添加
+  static getColorByFunction(func: string, isSelected: boolean = false): string {
+    const functionType = func.charAt(0);
+    const isExtroverted = func.charAt(1) === "e";
+
+    // 选中状态的颜色
+    if (isSelected) {
+      switch (functionType) {
+        case "T":
+          return isExtroverted ? "bg-blue-600" : "bg-blue-400";
+        case "F":
+          return isExtroverted ? "bg-green-600" : "bg-green-400";
+        case "S":
+          return isExtroverted ? "bg-yellow-600" : "bg-yellow-400";
+        case "N":
+          return isExtroverted ? "bg-purple-600" : "bg-purple-400";
+        default:
+          return "bg-gray-500";
+      }
+    }
+
+    // 未选中状态的浅色
+    switch (functionType) {
+      case "T":
+        return isExtroverted ? "bg-blue-100" : "bg-blue-50";
+      case "F":
+        return isExtroverted ? "bg-green-100" : "bg-green-50";
+      case "S":
+        return isExtroverted ? "bg-yellow-100" : "bg-yellow-50";
+      case "N":
+        return isExtroverted ? "bg-purple-100" : "bg-purple-50";
+      default:
+        return "bg-gray-50";
+    }
   }
 }
 

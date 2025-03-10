@@ -19,10 +19,14 @@ export default function MBTIIChingTable() {
   const [selectedType, setSelectedType] = useState<MbtiType>(
     MbtiService.getAllTypes()[0]
   );
-  const { items, push } = useFixedSizeStack<string>(2);
+  const { items, push, remove } = useFixedSizeStack<string>(2);
 
   function chooseFunction(func: string) {
-    if (!items.includes(func)) push(func);
+    if (!items.includes(func)) {
+      push(func);
+    } else {
+      remove(func);
+    }
   }
 
   const categories = MbtiService.getCategories();
@@ -75,8 +79,19 @@ export default function MBTIIChingTable() {
                 </TableCell>
                 {type.functions.map((func, index) => {
                   const hexagram = MbtiService.getHexagramByFunction(func);
+                  const isSelected = items.includes(func);
+                  const highlightClass = isSelected
+                    ? `bg-opacity-25 ${MbtiService.getColorByFunction(
+                        func,
+                        true
+                      )}`
+                    : "";
+
                   return (
-                    <TableCell key={index} className="text-center">
+                    <TableCell
+                      key={index}
+                      className={`text-center ${highlightClass}`}
+                    >
                       <span
                         className="ml-1"
                         title={

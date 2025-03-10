@@ -4,7 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@astrojs/react";
 
 // Get environment variable or default
-const gitHash = import.meta.env?.PUBLIC_GIT_HASH || "dev";
+const gitHash = process.env.PUBLIC_GIT_HASH || "dev";
 
 // https://astro.build/config
 export default defineConfig({

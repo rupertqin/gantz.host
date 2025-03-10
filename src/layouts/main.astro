@@ -4,9 +4,9 @@ interface Props {
 	description?: string;
 }
 import '../styles/global.css';
-
-const { title, description = "秦项科技 - 专注于人工智能与科技创新" } = Astro.props;
-const gitHash = import.meta.env.PUBLIC_GIT_HASH || 'dev';
+const siteName = import.meta.env.SITE_NAME;
+const { title, description = `${siteName} - 专注于人工智能与科技创新` } = Astro.props;
+const gitHash = import.meta.env.PUBLIC_GIT_HASH;
 ---
 
 <html lang="zh">
@@ -16,7 +16,7 @@ const gitHash = import.meta.env.PUBLIC_GIT_HASH || 'dev';
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="description" content={description} />
 		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
+		<title>{title.includes(siteName) ? title : `${title} - ${siteName}`}</title>
 	</head>
 	<body class="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900">
 		<div class="fixed inset-0 -z-10 bg-[radial-gradient(45%_25%_at_50%_50%,rgba(56,189,248,0.05),rgba(255,255,255,0))] dark:bg-[radial-gradient(45%_25%_at_50%_50%,rgba(56,189,248,0.05),rgba(17,24,39,0))]"></div>
@@ -30,7 +30,7 @@ const gitHash = import.meta.env.PUBLIC_GIT_HASH || 'dev';
 					<a href="/contact" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">联系我们</a>
 				</div>
 				<div class="text-sm text-gray-500 dark:text-gray-400">
-					<p>&copy; {new Date().getFullYear()} 秦项科技</p>
+					<p>&copy; {new Date().getFullYear()} {siteName}</p>
 					<p class="mt-2">
 						<a href="https://beian.miit.gov.cn/" target="_blank" class="hover:text-gray-900 dark:hover:text-white">
 							桂ICP备2023011846号-1

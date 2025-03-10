@@ -1,9 +1,10 @@
 ---
 import Main from '../layouts/main.astro';
 import { Button } from "@/components/ui/button";
+const siteName = import.meta.env.SITE_NAME;
 ---
 
-<Main title="联系我们 - 秦项科技">
+<Main title={`联系我们 - ${siteName}`}>
   <main class="container mx-auto px-4 py-16">
     <div class="max-w-3xl mx-auto">
       <h1 class="text-4xl font-bold mb-8 text-center">

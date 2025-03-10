@@ -12,6 +12,7 @@ export default defineConfig({
     plugins: [tailwindcss()],
     define: {
       "import.meta.env.PUBLIC_GIT_HASH": JSON.stringify(gitHash),
+      "import.meta.env.SITE_NAME": JSON.stringify("秦项科技"),
     },
   },
 

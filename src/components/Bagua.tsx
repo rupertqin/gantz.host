@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { Stage, Layer, Circle, Path, Group, Text } from "react-konva";
-import type { MbtiType } from "@/components/constant/mbti";
+import type { MbtiType } from "@/lib/mbti";
+import { MbtiService } from "@/lib/mbti";
 
 interface BaguaProps {
   type: MbtiType;
@@ -47,9 +48,35 @@ export const Bagua = ({ type }: BaguaProps) => {
     const x = centerX + Math.cos((angle * Math.PI) / 180) * distance;
     const y = centerY + Math.sin((angle * Math.PI) / 180) * distance;
 
+    // 获取功能对应的颜色
+    const color = MbtiService.getColorByFunction(word, true)
+      .replace("bg-", "") // 移除 bg- 前缀
+      .split(" ")[0]; // 只取第一个颜色类名
+
+    // 将 Tailwind 颜色类转换为实际颜色值
+    const colorMap: Record<string, string> = {
+      "blue-600": "#2563eb",
+      "blue-400": "#60a5fa",
+      "green-600": "#16a34a",
+      "green-400": "#4ade80",
+      "yellow-600": "#ca8a04",
+      "yellow-400": "#facc15",
+      "purple-600": "#9333ea",
+      "purple-400": "#c084fc",
+    };
+
+    const fillColor = colorMap[color] || "#000000";
+
     return (
       <Group key={index} x={x} y={y} rotation={angle}>
-        <Text text={word} rotation={90} fontSize={fontSize} y={-fontSize / 2} />
+        <Text
+          text={word}
+          rotation={90}
+          fontSize={fontSize}
+          y={-fontSize / 2}
+          fill={fillColor}
+          fontWeight="bold"
+        />
       </Group>
     );
   };

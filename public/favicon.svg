@@ -2,17 +2,28 @@
     <!-- Logo background -->
     <rect width="40" height="40" rx="8" fill="url(#logo-gradient)" />
 
-    <!-- Abstract tech elements -->
-    <path d="M10 20C10 14.4772 14.4772 10 20 10C25.5228 10 30 14.4772 30 20C30 25.5228 25.5228 30 20 30"
-          stroke="white" stroke-width="2.5" stroke-linecap="round" />
-    <path d="M20 30C17.2386 30 15 27.7614 15 25C15 22.2386 17.2386 20 20 20"
-          stroke="white" stroke-width="2.5" stroke-linecap="round" />
-    <circle cx="20" cy="20" r="2" fill="white" />
-    <circle cx="28" cy="14" r="2" fill="white" />
+    <!-- Main logo shape - modern "G" with tech elements -->
+    <path d="M14 20C14 16.6863 16.6863 14 20 14H26V20H20V26H26"
+          stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
 
-    <!-- Data/circuit lines -->
-    <path d="M20 18L28 12" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="1 2" />
-    <path d="M22 20L30 20" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="1 2" />
+    <path d="M20 26C23.3137 26 26 23.3137 26 20"
+          stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+
+    <!-- Tech circuit elements -->
+    <circle cx="20" cy="20" r="1.5" fill="white" />
+    <circle cx="26" cy="14" r="1.5" fill="white" />
+    <circle cx="26" cy="20" r="1.5" fill="white" />
+    <circle cx="26" cy="26" r="1.5" fill="white" />
+
+    <!-- Digital elements -->
+    <rect x="29" y="14" width="2" height="2" rx="0.5" fill="white" />
+    <rect x="29" y="19" width="2" height="2" rx="0.5" fill="white" />
+    <rect x="29" y="24" width="2" height="2" rx="0.5" fill="white" />
+
+    <!-- Connection lines -->
+    <path d="M26 14H29" stroke="white" stroke-width="1" stroke-linecap="round" />
+    <path d="M26 20H29" stroke="white" stroke-width="1" stroke-linecap="round" />
+    <path d="M26 26H29" stroke="white" stroke-width="1" stroke-linecap="round" />
 
     <!-- Gradient definition -->
     <defs>

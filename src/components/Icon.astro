@@ -1,0 +1,47 @@
+---
+interface Props {
+  name: "arrow-right" | "checkmark" | "chart" | "quote" | "logo";
+  class?: string;
+}
+
+const { name, class: className = "w-6 h-6" } = Astro.props;
+
+// Map of icon paths
+const icons = {
+  "arrow-right": "/images/icons/arrow-right.svg",
+  "checkmark": "/images/icons/checkmark.svg",
+  "chart": "/images/icons/chart.svg",
+  "quote": "/images/icons/quote.svg",
+  "logo": "/images/logo.svg"
+};
+
+const iconPath = icons[name];
+---
+
+<span class={`inline-block ${className}`}>
+  {iconPath && <img src={iconPath} alt={name} class="w-full h-full" style="color: currentColor;" />}
+</span>
+
+<style>
+  /* This allows SVG images to inherit color from parent */
+  span {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+  }
+
+  /* Apply color to SVG elements */
+  span img {
+    filter: brightness(0) saturate(100%) invert(var(--icon-invert, 0));
+  }
+
+  /* Dark mode support */
+  :global(.dark) span img,
+  @media (prefers-color-scheme: dark) {
+    span img {
+      --icon-invert: 1;
+    }
+  }
+</style>

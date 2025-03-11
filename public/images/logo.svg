@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 40 40">
+    <!-- Logo background -->
+    <rect width="40" height="40" rx="8" fill="url(#logo-gradient)" />
+
+    <!-- Main logo shape - modern "G" with tech elements -->
+    <path d="M14 20C14 16.6863 16.6863 14 20 14H26V20H20V26H26"
+          stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+
+    <path d="M20 26C23.3137 26 26 23.3137 26 20"
+          stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+
+    <!-- Tech circuit elements -->
+    <circle cx="20" cy="20" r="1.5" fill="white" />
+    <circle cx="26" cy="14" r="1.5" fill="white" />
+    <circle cx="26" cy="20" r="1.5" fill="white" />
+    <circle cx="26" cy="26" r="1.5" fill="white" />
+
+    <!-- Digital elements -->
+    <rect x="29" y="14" width="2" height="2" rx="0.5" fill="white" />
+    <rect x="29" y="19" width="2" height="2" rx="0.5" fill="white" />
+    <rect x="29" y="24" width="2" height="2" rx="0.5" fill="white" />
+
+    <!-- Connection lines -->
+    <path d="M26 14H29" stroke="white" stroke-width="1" stroke-linecap="round" />
+    <path d="M26 20H29" stroke="white" stroke-width="1" stroke-linecap="round" />
+    <path d="M26 26H29" stroke="white" stroke-width="1" stroke-linecap="round" />
+
+    <!-- Gradient definition -->
+    <defs>
+        <linearGradient id="logo-gradient" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#3B82F6" /> <!-- blue-500 -->
+            <stop offset="100%" stop-color="#8B5CF6" /> <!-- purple-500 -->
+        </linearGradient>
+    </defs>
+</svg>

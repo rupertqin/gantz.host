@@ -18,27 +18,127 @@ const gitHash = import.meta.env.PUBLIC_GIT_HASH;
 		<meta name="generator" content={Astro.generator} />
 		<title>{title.includes(siteName) ? title : `${title} - ${siteName}`}</title>
 	</head>
-	<body class="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900">
-		<div class="fixed inset-0 -z-10 bg-[radial-gradient(45%_25%_at_50%_50%,rgba(56,189,248,0.05),rgba(255,255,255,0))] dark:bg-[radial-gradient(45%_25%_at_50%_50%,rgba(56,189,248,0.05),rgba(17,24,39,0))]"></div>
-		<div class="fixed inset-0 -z-10 bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:4rem_4rem] dark:bg-[linear-gradient(to_right,#333333_1px,transparent_1px),linear-gradient(to_bottom,#333333_1px,transparent_1px)]"></div>
-		<slot />
-		<footer class="py-8 mt-auto">
-			<div class="container mx-auto px-4 text-center">
-				<div class="flex justify-center space-x-6 mb-4">
-					<a href="/" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">首页</a>
-					<a href="/mbti" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">精神分析</a>
-					<a href="/stock" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">股票分析</a>
-					<a href="https://pdf.gantz.host/" target="_blank" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">PDF工具</a>
-					<a href="/contact" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">联系我们</a>
+	<body class="min-h-screen bg-white text-gray-800 dark:bg-gray-900 dark:text-gray-200">
+		<!-- 顶部导航栏 -->
+		<header class="sticky top-0 z-50 bg-white dark:bg-gray-900 shadow-sm">
+			<div class="container mx-auto px-4">
+				<div class="flex items-center justify-between h-16">
+					<div class="flex items-center">
+						<a href="/" class="flex items-center">
+							<svg class="w-8 h-8 mr-2" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<!-- Logo background -->
+								<rect width="40" height="40" rx="8" fill="url(#logo-gradient)" />
+
+								<!-- Abstract tech elements -->
+								<path d="M10 20C10 14.4772 14.4772 10 20 10C25.5228 10 30 14.4772 30 20C30 25.5228 25.5228 30 20 30"
+									  stroke="white" stroke-width="2.5" stroke-linecap="round" />
+								<path d="M20 30C17.2386 30 15 27.7614 15 25C15 22.2386 17.2386 20 20 20"
+									  stroke="white" stroke-width="2.5" stroke-linecap="round" />
+								<circle cx="20" cy="20" r="2" fill="white" />
+								<circle cx="28" cy="14" r="2" fill="white" />
+
+								<!-- Data/circuit lines -->
+								<path d="M20 18L28 12" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="1 2" />
+								<path d="M22 20L30 20" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="1 2" />
+
+								<!-- Gradient definition -->
+								<defs>
+									<linearGradient id="logo-gradient" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+										<stop offset="0%" stop-color="#3B82F6" /> <!-- blue-500 -->
+										<stop offset="100%" stop-color="#8B5CF6" /> <!-- purple-500 -->
+									</linearGradient>
+								</defs>
+							</svg>
+							<span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">{siteName}</span>
+						</a>
+					</div>
+					<nav class="hidden md:flex space-x-8">
+						<a href="/" class="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 font-medium">首页</a>
+						<a href="/mbti" class="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 font-medium">AI与精神分析</a>
+						<a href="/stock" class="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 font-medium">股票分析</a>
+						<a href="https://pdf.gantz.host/" target="_blank" class="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 font-medium">PDF工具</a>
+						<a href="/contact" class="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 font-medium">联系我们</a>
+					</nav>
+					<div class="flex items-center">
+						<button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium">免费试用</button>
+					</div>
 				</div>
-				<div class="text-sm text-gray-500 dark:text-gray-400">
-					<p>&copy; {new Date().getFullYear()} {siteName}</p>
+			</div>
+		</header>
+
+		<slot />
+
+		<footer class="bg-gray-100 dark:bg-gray-800 py-12 mt-16">
+			<div class="container mx-auto px-4">
+				<div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+					<div>
+						<h3 class="text-lg font-semibold mb-4">产品</h3>
+						<ul class="space-y-2">
+							<li><a href="/mbti" class="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">AI与精神分析</a></li>
+							<li><a href="/stock" class="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">股票趋势分析</a></li>
+							<li><a href="https://pdf.gantz.host/" class="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">PDF工具套件</a></li>
+						</ul>
+					</div>
+					<div>
+						<h3 class="text-lg font-semibold mb-4">解决方案</h3>
+						<ul class="space-y-2">
+							<li><a href="#" class="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">企业数字化转型</a></li>
+							<li><a href="#" class="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">人工智能应用</a></li>
+							<li><a href="#" class="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">数据分析服务</a></li>
+						</ul>
+					</div>
+					<div>
+						<h3 class="text-lg font-semibold mb-4">资源</h3>
+						<ul class="space-y-2">
+							<li><a href="#" class="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">文档中心</a></li>
+							<li><a href="#" class="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">API参考</a></li>
+							<li><a href="#" class="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">常见问题</a></li>
+						</ul>
+					</div>
+					<div>
+						<h3 class="text-lg font-semibold mb-4">公司</h3>
+						<ul class="space-y-2">
+							<li><a href="/contact" class="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">联系我们</a></li>
+							<li><a href="#" class="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">关于我们</a></li>
+							<li><a href="#" class="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">加入我们</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="border-t border-gray-200 dark:border-gray-700 pt-8 text-center">
+					<div class="flex justify-center items-center mb-4">
+						<svg class="w-8 h-8 mr-2" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<!-- Logo background -->
+							<rect width="40" height="40" rx="8" fill="url(#footer-logo-gradient)" />
+
+							<!-- Abstract tech elements -->
+							<path d="M10 20C10 14.4772 14.4772 10 20 10C25.5228 10 30 14.4772 30 20C30 25.5228 25.5228 30 20 30"
+								  stroke="white" stroke-width="2.5" stroke-linecap="round" />
+							<path d="M20 30C17.2386 30 15 27.7614 15 25C15 22.2386 17.2386 20 20 20"
+								  stroke="white" stroke-width="2.5" stroke-linecap="round" />
+							<circle cx="20" cy="20" r="2" fill="white" />
+							<circle cx="28" cy="14" r="2" fill="white" />
+
+							<!-- Data/circuit lines -->
+							<path d="M20 18L28 12" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="1 2" />
+							<path d="M22 20L30 20" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="1 2" />
+
+							<!-- Gradient definition -->
+							<defs>
+								<linearGradient id="footer-logo-gradient" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+									<stop offset="0%" stop-color="#3B82F6" /> <!-- blue-500 -->
+									<stop offset="100%" stop-color="#8B5CF6" /> <!-- purple-500 -->
+								</linearGradient>
+							</defs>
+						</svg>
+						<span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">{siteName}</span>
+					</div>
+					<p class="text-gray-600 dark:text-gray-400">&copy; {new Date().getFullYear()} {siteName}</p>
 					<p class="mt-2">
-						<a href="https://beian.miit.gov.cn/" target="_blank" class="hover:text-gray-900 dark:hover:text-white">
+						<a href="https://beian.miit.gov.cn/" target="_blank" class="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">
 							桂ICP备2023011846号-1
 						</a>
 					</p>
-					<p class="mt-1 text-xs text-gray-400">Build: {gitHash}</p>
+					<p class="mt-1 text-xs text-gray-500 dark:text-gray-500">Build: {gitHash}</p>
 				</div>
 			</div>
 		</footer>

@@ -57,14 +57,14 @@ const buttonClass = "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-
 				</div>
 
 				<!-- 移动端菜单 -->
-				<div id="mobile-menu" class="md:hidden hidden">
-					<div class="px-2 pt-2 pb-3 space-y-1 border-t border-gray-200 dark:border-gray-700">
+				<div id="mobile-menu" class="md:hidden hidden fixed left-0 right-0 top-16 z-50 bg-white dark:bg-gray-900 shadow-lg">
+					<div class="px-4 py-4 space-y-3 max-h-[80vh] overflow-y-auto">
 						<a href="/" class={mobileNavLinkClass}>首页</a>
 						<a href="/mbti" class={mobileNavLinkClass}>AI与精神分析</a>
 						<a href="/stock" class={mobileNavLinkClass}>股票分析</a>
 						<a href="https://pdf.gantz.host/" target="_blank" class={mobileNavLinkClass}>PDF工具</a>
 						<a href="/contact" class={mobileNavLinkClass}>联系我们</a>
-						<div class="mt-4 px-3">
+						<div class="mt-6 px-3">
 							<button class={`w-full ${buttonClass}`}>免费试用</button>
 						</div>
 					</div>
@@ -134,6 +134,23 @@ const buttonClass = "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-
 				if (mobileMenuButton && mobileMenu) {
 					mobileMenuButton.addEventListener('click', () => {
 						mobileMenu.classList.toggle('hidden');
+
+						// Prevent body scrolling when menu is open
+						if (!mobileMenu.classList.contains('hidden')) {
+							document.body.style.overflow = 'hidden';
+						} else {
+							document.body.style.overflow = '';
+						}
+					});
+
+					// Close menu when clicking outside
+					document.addEventListener('click', (e) => {
+						if (!mobileMenu.classList.contains('hidden') &&
+							!mobileMenu.contains(e.target as Node) &&
+							!mobileMenuButton.contains(e.target as Node)) {
+							mobileMenu.classList.add('hidden');
+							document.body.style.overflow = '';
+						}
 					});
 				}
 			});

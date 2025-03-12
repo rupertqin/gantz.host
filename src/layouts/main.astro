@@ -7,6 +7,12 @@ import '../styles/global.css';
 const siteName = import.meta.env.SITE_NAME;
 const { title, description = `${siteName} - 专注于人工智能与科技创新` } = Astro.props;
 const gitHash = import.meta.env.PUBLIC_GIT_HASH;
+
+// 提取共用样式类
+const navLinkClass = "text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 font-medium";
+const mobileNavLinkClass = "block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-blue-400 dark:hover:bg-gray-800";
+const footerLinkClass = "text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400";
+const buttonClass = "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium";
 ---
 
 <html lang="zh">
@@ -31,15 +37,15 @@ const gitHash = import.meta.env.PUBLIC_GIT_HASH;
 					</div>
 					<!-- 桌面导航菜单 -->
 					<nav class="hidden md:flex space-x-8">
-						<a href="/" class="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 font-medium">首页</a>
-						<a href="/mbti" class="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 font-medium">AI与精神分析</a>
-						<a href="/stock" class="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 font-medium">股票分析</a>
-						<a href="https://pdf.gantz.host/" target="_blank" class="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 font-medium">PDF工具</a>
-						<a href="/contact" class="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 font-medium">联系我们</a>
+						<a href="/" class={navLinkClass}>首页</a>
+						<a href="/mbti" class={navLinkClass}>AI与精神分析</a>
+						<a href="/stock" class={navLinkClass}>股票分析</a>
+						<a href="https://pdf.gantz.host/" target="_blank" class={navLinkClass}>PDF工具</a>
+						<a href="/contact" class={navLinkClass}>联系我们</a>
 					</nav>
 					<div class="flex items-center">
 						<!-- 免费试用按钮 -->
-						<button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium hidden md:block">免费试用</button>
+						<button class={`${buttonClass} hidden md:block`}>免费试用</button>
 
 						<!-- 移动端菜单按钮 -->
 						<button id="mobile-menu-button" class="md:hidden text-gray-700 dark:text-gray-300 p-2 focus:outline-none">
@@ -53,13 +59,13 @@ const gitHash = import.meta.env.PUBLIC_GIT_HASH;
 				<!-- 移动端菜单 -->
 				<div id="mobile-menu" class="md:hidden hidden">
 					<div class="px-2 pt-2 pb-3 space-y-1 border-t border-gray-200 dark:border-gray-700">
-						<a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-blue-400 dark:hover:bg-gray-800">首页</a>
-						<a href="/mbti" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-blue-400 dark:hover:bg-gray-800">AI与精神分析</a>
-						<a href="/stock" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-blue-400 dark:hover:bg-gray-800">股票分析</a>
-						<a href="https://pdf.gantz.host/" target="_blank" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-blue-400 dark:hover:bg-gray-800">PDF工具</a>
-						<a href="/contact" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-blue-400 dark:hover:bg-gray-800">联系我们</a>
+						<a href="/" class={mobileNavLinkClass}>首页</a>
+						<a href="/mbti" class={mobileNavLinkClass}>AI与精神分析</a>
+						<a href="/stock" class={mobileNavLinkClass}>股票分析</a>
+						<a href="https://pdf.gantz.host/" target="_blank" class={mobileNavLinkClass}>PDF工具</a>
+						<a href="/contact" class={mobileNavLinkClass}>联系我们</a>
 						<div class="mt-4 px-3">
-							<button class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium">免费试用</button>
+							<button class={`w-full ${buttonClass}`}>免费试用</button>
 						</div>
 					</div>
 				</div>
@@ -74,33 +80,33 @@ const gitHash = import.meta.env.PUBLIC_GIT_HASH;
 					<div>
 						<h3 class="text-lg font-semibold mb-4">产品</h3>
 						<ul class="space-y-2">
-							<li><a href="/mbti" class="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">AI与精神分析</a></li>
-							<li><a href="/stock" class="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">股票趋势分析</a></li>
-							<li><a href="https://pdf.gantz.host/" class="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">PDF工具套件</a></li>
+							<li><a href="/mbti" class={footerLinkClass}>AI与精神分析</a></li>
+							<li><a href="/stock" class={footerLinkClass}>股票趋势分析</a></li>
+							<li><a href="https://pdf.gantz.host/" class={footerLinkClass}>PDF工具套件</a></li>
 						</ul>
 					</div>
 					<div>
 						<h3 class="text-lg font-semibold mb-4">解决方案</h3>
 						<ul class="space-y-2">
-							<li><a href="#" class="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">企业数字化转型</a></li>
-							<li><a href="#" class="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">人工智能应用</a></li>
-							<li><a href="#" class="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">数据分析服务</a></li>
+							<li><a href="#" class={footerLinkClass}>企业数字化转型</a></li>
+							<li><a href="#" class={footerLinkClass}>人工智能应用</a></li>
+							<li><a href="#" class={footerLinkClass}>数据分析服务</a></li>
 						</ul>
 					</div>
 					<div>
 						<h3 class="text-lg font-semibold mb-4">资源</h3>
 						<ul class="space-y-2">
-							<li><a href="#" class="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">文档中心</a></li>
-							<li><a href="#" class="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">API参考</a></li>
-							<li><a href="#" class="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">常见问题</a></li>
+							<li><a href="#" class={footerLinkClass}>文档中心</a></li>
+							<li><a href="#" class={footerLinkClass}>API参考</a></li>
+							<li><a href="#" class={footerLinkClass}>常见问题</a></li>
 						</ul>
 					</div>
 					<div>
 						<h3 class="text-lg font-semibold mb-4">公司</h3>
 						<ul class="space-y-2">
-							<li><a href="/contact" class="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">联系我们</a></li>
-							<li><a href="#" class="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">关于我们</a></li>
-							<li><a href="#" class="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">加入我们</a></li>
+							<li><a href="/contact" class={footerLinkClass}>联系我们</a></li>
+							<li><a href="#" class={footerLinkClass}>关于我们</a></li>
+							<li><a href="#" class={footerLinkClass}>加入我们</a></li>
 						</ul>
 					</div>
 				</div>
@@ -110,7 +116,7 @@ const gitHash = import.meta.env.PUBLIC_GIT_HASH;
 						<span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">{siteName}</span>
 					</div>
 					<p class="text-gray-600 dark:text-gray-400">&copy; {new Date().getFullYear()} {siteName} |
-						<a href="https://beian.miit.gov.cn/" target="_blank" class="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">
+						<a href="https://beian.miit.gov.cn/" target="_blank" class={footerLinkClass}>
 							桂ICP备2023011846号-1
 						</a>
 					</p>

@@ -13,6 +13,8 @@ export default defineConfig({
       tailwindcss(),
       compression({
         ext: ".gz", // 生成 .gz 格式
+        filter: /\.(js|css|html|svg|txt|xml)$/, // 压缩文件类型
+        threshold: 512, // 文件大小阈值
         algorithm: "gzip", // 压缩算法
         deleteOriginFile: false, // 保留原始文件
       }),

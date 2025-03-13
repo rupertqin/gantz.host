@@ -1,7 +1,7 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
-import compression from "vite-plugin-compression";
+import compressor from "astro-compressor";
 
 // Get environment variable or default
 const gitHash = process.env.PUBLIC_GIT_HASH || "dev";
@@ -11,17 +11,17 @@ export default defineConfig({
   vite: {
     plugins: [
       tailwindcss(),
-      compression({
-        ext: ".gz", // 生成 .gz 格式
-        filter: /\.(js|css|html|svg|txt|xml)$/, // 压缩文件类型
-        threshold: 512, // 文件大小阈值
-        algorithm: "gzip", // 压缩算法
-        deleteOriginFile: false, // 保留原始文件
-      }),
     ],
     define: {
       "import.meta.env.PUBLIC_GIT_HASH": JSON.stringify(gitHash),
       "import.meta.env.SITE_NAME": JSON.stringify("秦项科技"),
     },
   },
+  integrations: [
+    compressor({
+      gzip: true,
+      brotli: false, // 如果需要 brotli 压缩，可以设置为 true
+      fileExtensions: ['.html', '.js', '.css', '.svg', '.txt', '.xml'], // 需要压缩的文件类型
+    })
+  ]
 });

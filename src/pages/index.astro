@@ -1,6 +1,6 @@
 ---
 import Main from '../layouts/main.astro';
-import { Button } from "@/components/ui/button";
+import Button from "../components/Button.astro";
 import Icon from "../components/Icon.astro";
 export const prerender = true;
 const siteName = import.meta.env.SITE_NAME;
@@ -21,8 +21,8 @@ const siteName = import.meta.env.SITE_NAME;
 							简单、高效且经济实惠！整合人工智能、数据分析和专业服务，助力企业数字化转型。
 						</p>
 						<div class="flex gap-4 justify-center md:justify-start">
-							<Button variant="default" size="lg" className="bg-blue-600 hover:bg-blue-700">免费试用</Button>
-							<Button variant="outline" size="lg" className="hover:bg-gray-100">预约演示</Button>
+							<Button variant="default" size="lg">免费试用</Button>
+							<Button variant="outline" size="lg">预约演示</Button>
 						</div>
 					</div>
 					<div class="md:w-1/2 w-full mt-16 md:mt-8">
@@ -98,7 +98,7 @@ const siteName = import.meta.env.SITE_NAME;
 				<div class="flex flex-wrap justify-center gap-8 md:gap-12">
 					{[
 						{ name: "AI分析", icon: "🧠" },
-						{ name: "AI与精神分析", icon: "🔍" },
+						{ name: "精神分析助手", icon: "🔍" },
 						{ name: "股票分析", icon: "📈" },
 						{ name: "PDF工具", icon: "📄" },
 						{ name: "数据可视化", icon: "📊" },
@@ -125,7 +125,7 @@ const siteName = import.meta.env.SITE_NAME;
 							icon: "🤖"
 						},
 						{
-							title: "AI与精神分析",
+							title: "精神分析助手",
 							desc: "AI赋能的精神分析工具，结合荣格心理学与现代技术，提供深度人格洞察",
 							icon: "🧠"
 						},
@@ -193,9 +193,9 @@ const siteName = import.meta.env.SITE_NAME;
 						</ul>
 						<div class="flex gap-4">
 							<a href="/stock">
-								<Button variant="default" className="bg-blue-600 hover:bg-blue-700">了解更多</Button>
+								<Button variant="default">了解更多</Button>
 							</a>
-							<Button variant="outline" className="hover:bg-gray-100">免费试用</Button>
+							<Button variant="outline">免费试用</Button>
 						</div>
 					</div>
 					<div class="md:w-1/2">
@@ -262,8 +262,8 @@ const siteName = import.meta.env.SITE_NAME;
 					立即体验我们的智能解决方案，提升您的业务效率和决策能力。
 				</p>
 				<div class="flex justify-center gap-4">
-					<Button variant="default" size="lg" className="bg-white text-blue-600 hover:bg-gray-100">免费试用</Button>
-					<Button variant="outline" size="lg" className="border-2 border-white text-white bg-transparent hover:bg-white/20">联系销售</Button>
+					<Button variant="white" size="lg">免费试用</Button>
+					<Button variant="outline-white" size="lg">联系销售</Button>
 				</div>
 		</div>
 		</section>

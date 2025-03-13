@@ -1,7 +1,6 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
-import react from "@astrojs/react";
 
 // Get environment variable or default
 const gitHash = process.env.PUBLIC_GIT_HASH || "dev";
@@ -15,6 +14,4 @@ export default defineConfig({
       "import.meta.env.SITE_NAME": JSON.stringify("秦项科技"),
     },
   },
-
-  integrations: [react()],
 });

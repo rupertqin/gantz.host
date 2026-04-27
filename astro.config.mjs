@@ -1,13 +1,14 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
-import customCompression from "./scripts/gz-compression-integration.js";
+import compressor from "astro-compressor";
 
 // Get environment variable or default
 const gitHash = process.env.PUBLIC_GIT_HASH || "dev";
 
 // https://astro.build/config
 export default defineConfig({
+  output: "static",
   vite: {
     plugins: [tailwindcss()],
     define: {
@@ -16,11 +17,21 @@ export default defineConfig({
     },
   },
   integrations: [
-    customCompression({
-      fileExtensions: [".html", ".js", ".css", ".svg", ".txt", ".xml"], // 需要压缩的文件类型
-      threshold: 512, // 文件大小阈值（字节），只有超过 1KB 的文件才会被压缩
-      algorithm: "gzip", // 压缩算法
-      gzipOptions: { level: 9 }, // 最高压缩级别
+    compressor({
+      gzip: { level: 9 },
+      brotli: true,
+      zstd: false,
+      fileExtensions: [
+        ".html",
+        ".css",
+        ".svg",
+        ".txt",
+        ".xml",
+        ".js",
+        ".cjs",
+        ".mjs",
+        ".json",
+      ],
     }),
   ],
 });
